@@ -35,6 +35,7 @@ public class Matchmaker
 				// On first player accept, notify him
 				String usernamePlayer1 = firstReader.readLine();
 				firstWriter.write("*** Waiting for another player to join... ***\n");
+				firstWriter.flush();
 
 				// Listen for the second player
 				Socket secondConnectionSocket = serverSocket.accept();
@@ -46,9 +47,12 @@ public class Matchmaker
 				// On first second player accept, notify both
 				String usernamePlayer2 = secondReader.readLine();
 				firstWriter.write("*** GAME FOUND! ***\n");
+				firstWriter.flush();
 				secondWriter.write("*** GAME FOUND! ***\n");
+				secondWriter.flush();
 
-				new Thread(new GameThread(usernamePlayer1, usernamePlayer2));
+				// TODO pasarle al thread los sockets creados para que pueda gestionar los mensajes tambien
+				new Thread(new GameThread(usernamePlayer1, usernamePlayer2)).start();
 			}
 		}
 		catch (IOException e)
