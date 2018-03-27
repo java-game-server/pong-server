@@ -1,4 +1,4 @@
-package com.apporelbotna.gameserver.pongserver;
+package com.apporelbotna.gameserver.pongserver.stubs;
 
 public class Vector2
 {

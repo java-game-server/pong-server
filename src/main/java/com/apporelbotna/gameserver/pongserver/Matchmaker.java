@@ -10,6 +10,8 @@ import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.apporelbotna.gameserver.pongserver.stubs.Player;
+
 public class Matchmaker
 {
 	private static Queue<Player> playerQueue; // CHECK can this be filled by another thread?
@@ -51,8 +53,13 @@ public class Matchmaker
 				secondWriter.write("*** GAME FOUND! ***\n");
 				secondWriter.flush();
 
-				// TODO pasarle al thread los sockets creados para que pueda gestionar los mensajes tambien
-				new Thread(new GameThread(usernamePlayer1, usernamePlayer2)).start();
+				PlayerConnection playerConnection1 = new PlayerConnection(
+						new Player(usernamePlayer1), firstConnectionSocket);
+
+				PlayerConnection playerConnection2 = new PlayerConnection(
+						new Player(usernamePlayer2), secondConnectionSocket);
+
+				new Thread(new GameControllerThread(playerConnection1, playerConnection2)).start();
 			}
 		}
 		catch (IOException e)

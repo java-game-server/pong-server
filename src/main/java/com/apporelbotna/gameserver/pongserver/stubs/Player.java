@@ -1,14 +1,17 @@
-package com.apporelbotna.gameserver.pongserver;
+package com.apporelbotna.gameserver.pongserver.stubs;
+
+import java.awt.Graphics;
 
 public class Player
 {
 	private String username;
-	private Vector2 position;
+	private PlayerPawn pawn;
 	private int goals;
 
 	public Player(String username)
 	{
 		this.username = username;
+		pawn = new PlayerPawn();
 	}
 
 	public String getUsername()
@@ -16,14 +19,14 @@ public class Player
 		return username;
 	}
 
-	public Vector2 getPosition()
+	public PlayerPawn getPawn()
 	{
-		return position;
+		return pawn;
 	}
 
-	public void setPosition(Vector2 position)
+	public void setPawn(PlayerPawn pawn)
 	{
-		this.position = position;
+		this.pawn = pawn;
 	}
 
 	public int getGoals()
@@ -34,6 +37,46 @@ public class Player
 	public void setGoals(int goals)
 	{
 		this.goals = goals;
+	}
+
+	public void addGoal()
+	{
+		goals++;
+	}
+
+	public int getPosition()
+	{
+		return pawn.getPosition();
+	}
+
+	public void setPosition(int position)
+	{
+		pawn.setPosition(position);
+	}
+
+	public boolean isGoingUp()
+	{
+		return pawn.isGoingUp();
+	}
+
+	public void setGoingUp(boolean goingUp)
+	{
+		pawn.setGoingUp(goingUp);
+	}
+
+	public void move()
+	{
+		pawn.move();
+	}
+
+	public void resetPosition()
+	{
+		pawn.resetPosition();
+	}
+
+	public void draw(Graphics g)
+	{
+		pawn.draw(g);
 	}
 
 	@Override
@@ -63,11 +106,5 @@ public class Player
 		else if (!username.equals(other.username))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "Player [username=" + username + ", position=" + position + ", goals=" + goals + "]";
 	}
 }
