@@ -24,7 +24,7 @@ public class Matchmaker
 
 		try (ServerSocket serverSocket = new ServerSocket(5555))
 		{
-			// REFACTOR meeeee
+			// REFACTOR me please i'm crying
 			while (playerQueue.size() < DDOS_HALT)
 			{
 				// Listen for the first player

@@ -4,13 +4,35 @@ import com.apporelbotna.gameserver.pongserver.stubs.Player;
 
 public class PlayerMessage
 {
-	public static final String GO_UP = "1";
-	public static final String GO_DOWN = "0";
+	public enum Message
+	{
+		GO_UP("1"), GO_DOWN("0");
+
+		private String text;
+
+		private Message(String text)
+		{
+			this.text = text;
+		}
+
+		public String getText()
+		{
+			return text;
+		}
+
+		public static Message fromStringCode(String code)
+		{
+			for(Message message : Message.values())
+				if(message.getText().equals(code))
+					return message;
+			throw new RuntimeException("The PlayerMessage#Message code " + code + " is not defined");
+		}
+	}
 
 	private Player player;
-	private String message;
+	private Message message;
 
-	public PlayerMessage(Player player, String message)
+	public PlayerMessage(Player player, Message message)
 	{
 		this.player = player;
 		this.message = message;
@@ -21,7 +43,7 @@ public class PlayerMessage
 		return player;
 	}
 
-	public String getMessage()
+	public Message getMessage()
 	{
 		return message;
 	}

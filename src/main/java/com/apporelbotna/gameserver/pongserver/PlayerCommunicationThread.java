@@ -5,13 +5,15 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.apporelbotna.gameserver.pongserver.PlayerMessage.Message;
+import com.apporelbotna.gameserver.pongserver.stubs.Ball;
 import com.apporelbotna.gameserver.pongserver.stubs.Player;
 
-public class PlayerListenerThread implements Runnable
+public class PlayerCommunicationThread implements Runnable
 {
 	public static class MessageReceivedEvent extends Observable
 	{
-		public void notifyNewMessage(Player player, String message)
+		public void notifyNewMessage(Player player, Message message)
 		{
 			notifyObservers(new PlayerMessage(player, message));
 		}
@@ -22,13 +24,13 @@ public class PlayerListenerThread implements Runnable
 
 	private boolean readyToClose;
 
-	public PlayerListenerThread(PlayerConnection playerConnection)
+	public PlayerCommunicationThread(PlayerConnection playerConnection)
 	{
 		this.playerConnection = playerConnection;
 		messageReceivedEvent = new MessageReceivedEvent();
 	}
 
-	public PlayerListenerThread(PlayerConnection playerConnection, Observer newMsgObserver)
+	public PlayerCommunicationThread(PlayerConnection playerConnection, Observer newMsgObserver)
 	{
 		this.playerConnection = playerConnection;
 		messageReceivedEvent = new MessageReceivedEvent();
@@ -40,6 +42,11 @@ public class PlayerListenerThread implements Runnable
 		return playerConnection.getPlayer();
 	}
 
+	public void sendGameInfo(Ball ballPosition, Player enemyPosition)
+	{
+		playerConnection.sendGameInfo(ballPosition, enemyPosition);
+	}
+
 	@Override
 	public void run()
 	{
@@ -48,7 +55,10 @@ public class PlayerListenerThread implements Runnable
 			while ( ! readyToClose)
 			{
 				String playerMessage = reader.readLine();
-				messageReceivedEvent.notifyNewMessage(playerConnection.getPlayer(), playerMessage);
+				messageReceivedEvent.notifyNewMessage(
+						playerConnection.getPlayer(),
+						Message.fromStringCode(playerMessage)
+				);
 			}
 		}
 		catch(IOException e)

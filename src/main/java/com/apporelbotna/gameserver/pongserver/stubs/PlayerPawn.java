@@ -1,6 +1,9 @@
 package com.apporelbotna.gameserver.pongserver.stubs;
 
+import java.awt.Color;
 import java.awt.Graphics;
+
+import com.google.gson.annotations.Expose;
 
 public class PlayerPawn implements Drawable
 {
@@ -10,16 +13,18 @@ public class PlayerPawn implements Drawable
 	public static final int BAR_HEIGHT = 100;
 	public static final int MARGIN_LEFT_RIGHT = 20;
 
-	private int position; /*
+	@Expose private int position; /*
 												 * Since the player can only move vertically, just his height is taken into
 												 * account (the y component)
 												 */
 	private boolean goingUp;
 	private boolean controlledPawn;
+	private Color color;
 
 	public PlayerPawn()
 	{
 		this.position = INITIAL_POSITION;
+		color = Color.WHITE;
 	}
 
 	public int getPosition()
@@ -73,6 +78,7 @@ public class PlayerPawn implements Drawable
 	@Override
 	public void draw(Graphics g)
 	{
+		g.setColor(color);
 		g.fillRect(
 				controlledPawn ? MARGIN_LEFT_RIGHT : PongGame.WINDOW_WIDTH - MARGIN_LEFT_RIGHT - BAR_WIDTH,
 				position,

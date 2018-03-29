@@ -1,24 +1,21 @@
 package com.apporelbotna.gameserver.pongserver;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+import com.apporelbotna.gameserver.pongserver.stubs.Ball;
 import com.apporelbotna.gameserver.pongserver.stubs.Player;
+import com.apporelbotna.gameserver.pongserver.stubs.ServerMessage;
+import com.apporelbotna.gameserver.pongserver.stubs.SocketConnection;
 
-public class PlayerConnection
+public class PlayerConnection extends SocketConnection
 {
 	private Player player;
-	private Socket socket;
 
-	public PlayerConnection(Player player, Socket socket)
+	public PlayerConnection(Player player, Socket socket) throws IOException
 	{
-		super();
+		super(socket);
 		this.player = player;
-		this.socket = socket;
 	}
 
 	public Player getPlayer()
@@ -26,31 +23,8 @@ public class PlayerConnection
 		return player;
 	}
 
-	public Socket getSocket()
+	public void sendGameInfo(Ball ballPosition, Player enemyPosition)
 	{
-		return socket;
-	}
-
-	public BufferedReader getReader() throws IOException
-	{
-		return new BufferedReader(new InputStreamReader(socket.getInputStream()));
-	}
-
-	public BufferedWriter getWriter() throws IOException
-	{
-		return new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-	}
-
-	public void close()
-	{
-		player = null;
-		try
-		{
-			socket.close();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+		new ServerMessage(this, ballPosition, enemyPosition).send();
 	}
 }

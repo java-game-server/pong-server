@@ -1,30 +1,68 @@
 package com.apporelbotna.gameserver.pongserver.stubs;
 
+import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
-public class Ball extends Observable implements Drawable
+import com.google.gson.annotations.Expose;
+
+public class Ball implements Drawable
 {
 	public static final int BALL_RADIUS = 15;
 	public static final int INITIAL_X = 400; // TODO sensiblot
 	public static final int INITIAL_Y = 400; // TODO sensiblot
 
-	private Vector2 position;
+	@Expose private Vector2 position;
 	private Vector2 velocity;
-	private GoalEvent goalEvent;
+	private GoalEvent goalEvent = new GoalEvent();
+	private Color color;
 
 	public Ball()
 	{
 		spawnAtCenter();
 	}
 
+	public Ball(Observer goalObserver)
+	{
+		addGoalObserver(goalObserver);
+		spawnAtCenter();
+	}
+
 	public void spawnAtCenter()
 	{
+		color = Color.YELLOW;
 		Random random = new Random();
 		this.position = new Vector2(INITIAL_X, INITIAL_Y);
-		this.velocity = new Vector2(random.nextInt(2) - 1, random.nextInt(2) - 1);
+
+		int initialVelocityX = random.nextInt(2) - 1;
+		while(initialVelocityX == 0)
+			initialVelocityX = random.nextInt(2) - 1;
+		int initialVelocityY = random.nextInt(2) - 1;
+		while(initialVelocityY == 0)
+			initialVelocityY = random.nextInt(2) - 1;
+		this.velocity = new Vector2(initialVelocityX, initialVelocityY);
+	}
+
+	public void move()
+	{
+		// if pos goes out of X range
+			// if ball collides with player pawn
+				// velocity.X = -velocity.X
+			// else
+				// GOAL EVENT
+		if(position.Y <= 0 || position.Y + BALL_RADIUS >= PongGame.WINDOW_HEIGHT)
+			velocity.Y = -velocity.Y;
+		position.X += velocity.X;
+		position.Y += velocity.Y;
+	}
+
+
+	@Override
+	public void draw(Graphics g)
+	{
+		g.setColor(color);
+		g.fillOval(position.X, position.Y, BALL_RADIUS, BALL_RADIUS);
 	}
 
 	public Vector2 getPosition()
@@ -47,19 +85,6 @@ public class Ball extends Observable implements Drawable
 		this.velocity = velocity;
 	}
 
-	public void move()
-	{
-		// if pos goes out of X range
-			// if ball collides with player pawn
-				// velocity.X = -velocity.X
-			// else
-				// GOAL EVENT
-		if(position.Y <= 0 || position.Y >= PongGame.WINDOW_HEIGHT)
-			velocity.Y = -velocity.Y;
-		position.X += velocity.X;
-		position.Y += velocity.Y;
-	}
-
 	public void addGoalObserver(Observer observer)
 	{
 		goalEvent.addObserver(observer);
@@ -75,9 +100,13 @@ public class Ball extends Observable implements Drawable
 		goalEvent.goal(scoringPlayer);
 	}
 
-	@Override
-	public void draw(Graphics g)
+	public Color getColor()
 	{
-		g.fillOval(position.X, position.Y, BALL_RADIUS, BALL_RADIUS);
+		return color;
+	}
+
+	public void setColor(Color color)
+	{
+		this.color = color;
 	}
 }

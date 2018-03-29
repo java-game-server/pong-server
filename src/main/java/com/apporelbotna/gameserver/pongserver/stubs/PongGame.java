@@ -20,6 +20,34 @@ public class PongGame implements Observer
 	{
 		this.player1 = player1;
 		this.player2 = player2;
+		ball = new Ball(this);
+	}
+
+	public Player getPlayer1()
+	{
+		return player1;
+	}
+
+	public Player getPlayer2()
+	{
+		return player2;
+	}
+
+	public Ball getBall()
+	{
+		return ball;
+	}
+
+	public Player getWinner()
+	{
+		return winner;
+	}
+
+	public void updatePhysics()
+	{
+		player1.move();
+		player2.move();
+		ball.move();
 	}
 
 	public boolean hasGameEnded()

@@ -2,10 +2,12 @@ package com.apporelbotna.gameserver.pongserver.stubs;
 
 import java.awt.Graphics;
 
+import com.google.gson.annotations.Expose;
+
 public class Player
 {
 	private String username;
-	private PlayerPawn pawn;
+	@Expose private PlayerPawn pawn;
 	private int goals;
 
 	public Player(String username)

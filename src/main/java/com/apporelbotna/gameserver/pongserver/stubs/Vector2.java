@@ -1,9 +1,11 @@
 package com.apporelbotna.gameserver.pongserver.stubs;
 
+import com.google.gson.annotations.Expose;
+
 public class Vector2
 {
-	public int X;
-	public int Y;
+	@Expose public int X;
+	@Expose public int Y;
 
 	public Vector2() { }
 	public Vector2(int X, int Y) { this.X = X; this.Y = Y; }
