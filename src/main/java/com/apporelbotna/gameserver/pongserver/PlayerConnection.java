@@ -5,7 +5,7 @@ import java.net.Socket;
 
 import com.apporelbotna.gameserver.pongserver.stubs.Ball;
 import com.apporelbotna.gameserver.pongserver.stubs.Player;
-import com.apporelbotna.gameserver.pongserver.stubs.ServerMessage;
+import com.apporelbotna.gameserver.pongserver.stubs.GameStatusMessage;
 import com.apporelbotna.gameserver.pongserver.stubs.SocketConnection;
 
 /**
@@ -31,6 +31,6 @@ public class PlayerConnection extends SocketConnection
 
 	public boolean sendGameInfo(Ball ballPosition, Player enemyPosition)
 	{
-		return new ServerMessage(this, ballPosition, enemyPosition).send();
+		return new GameStatusMessage(this, ballPosition, enemyPosition).send();
 	}
 }

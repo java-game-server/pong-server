@@ -3,9 +3,10 @@ package com.apporelbotna.gameserver.pongserver.stubs;
 import com.apporelbotna.gameserver.pongserver.PlayerConnection;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.annotations.Expose;
 
-public class ServerMessage
+public class GameStatusMessage
 {
 	private PlayerConnection playerConnection;
 
@@ -21,7 +22,7 @@ public class ServerMessage
 	@Expose
 	private Player enemy;
 
-	public ServerMessage(PlayerConnection playerConnection, Ball ball, Player enemy)
+	public GameStatusMessage(PlayerConnection playerConnection, Ball ball, Player enemy)
 	{
 		this.playerConnection = playerConnection;
 		this.ball = ball;
@@ -55,9 +56,22 @@ public class ServerMessage
 		return playerConnection.write(gson.toJson(this));
 	}
 
-	public static ServerMessage fromJson(String json)
+	public static GameStatusMessage fromJson(String json)
 	{
-		return new Gson().fromJson(json, ServerMessage.class);
+		return new Gson().fromJson(json, GameStatusMessage.class);
+	}
+
+	public static boolean canCreateFromJson(String json)
+	{
+		try
+		{
+			new Gson().fromJson(json, GameStatusMessage.class);
+			return true;
+		}
+		catch (JsonSyntaxException e)
+		{
+			return false;
+		}
 	}
 
 	@Override
