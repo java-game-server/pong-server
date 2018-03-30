@@ -1,9 +1,6 @@
 package com.apporelbotna.gameserver.pongserver.stubs;
 
-import java.util.Observable;
-import java.util.Observer;
-
-public class PongGame implements Observer
+public class PongGame
 {
 	public static final int WINDOW_WIDTH = 1080; // TODO give sensible value
 	public static final int WINDOW_HEIGHT = 800; // TODO give sensible value
@@ -20,7 +17,7 @@ public class PongGame implements Observer
 	{
 		this.player1 = player1;
 		this.player2 = player2;
-		ball = new Ball(this);
+		ball = new Ball();
 	}
 
 	public Player getPlayer1()
@@ -47,6 +44,20 @@ public class PongGame implements Observer
 	{
 		player1.move();
 		player2.move();
+
+		if(ball.isAboutToEnterGoalArea())
+		{
+			if(ball.collidesWith(player1.getPawn()) || ball.collidesWith(player2.getPawn()))
+				ball.getVelocity().X = -ball.getVelocity().X;
+			else
+			{
+				if(ball.isAboutToEnterPlayer1Area())
+					player2.addGoal();
+				else
+					player1.addGoal();
+				ball.spawnAtCenter();
+			}
+		}
 		ball.move();
 	}
 
@@ -63,18 +74,5 @@ public class PongGame implements Observer
 	public void setPlayerPawn2GoingUp(boolean isGoingUp)
 	{
 		player2.getPawn().setGoingUp(isGoingUp);
-	}
-
-	@Override
-	public void update(Observable o, Object arg)
-	{
-		if (o.getClass().equals(GoalEvent.class)) // On goal
-		{
-			Player scoringPlayer = (Player)arg;
-			if(scoringPlayer.equals(player1))
-				player1.addGoal();
-			else
-				player2.addGoal();
-		}
 	}
 }

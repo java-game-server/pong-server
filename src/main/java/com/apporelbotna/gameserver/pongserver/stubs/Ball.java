@@ -2,7 +2,6 @@ package com.apporelbotna.gameserver.pongserver.stubs;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Observer;
 import java.util.Random;
 
 import com.google.gson.annotations.Expose;
@@ -13,19 +12,15 @@ public class Ball implements Drawable
 	public static final int INITIAL_X = 400; // TODO sensiblot
 	public static final int INITIAL_Y = 400; // TODO sensiblot
 
+	private final int goalMargin;
+
 	@Expose private Vector2 position;
 	private Vector2 velocity;
-	private GoalEvent goalEvent = new GoalEvent();
 	private Color color;
 
 	public Ball()
 	{
-		spawnAtCenter();
-	}
-
-	public Ball(Observer goalObserver)
-	{
-		addGoalObserver(goalObserver);
+		goalMargin = PlayerPawn.MARGIN_LEFT_RIGHT + PlayerPawn.BAR_WIDTH;
 		spawnAtCenter();
 	}
 
@@ -44,19 +39,34 @@ public class Ball implements Drawable
 		this.velocity = new Vector2(initialVelocityX, initialVelocityY);
 	}
 
+	public boolean isAboutToEnterPlayer1Area()
+	{
+		return position.X - 1 <= goalMargin;
+	}
+
+	public boolean isAboutToEnterPlayer2Area()
+	{
+		return position.X + 1 >= PongGame.WINDOW_WIDTH - goalMargin;
+	}
+
+	public boolean isAboutToEnterGoalArea()
+	{
+		return isAboutToEnterPlayer1Area() || isAboutToEnterPlayer2Area();
+	}
+
+	public boolean collidesWith(PlayerPawn playerPawn)
+	{
+		return position.Y >= playerPawn.getPosition()
+				&& position.Y <= playerPawn.getPosition() + PlayerPawn.BAR_HEIGHT;
+	}
+
 	public void move()
 	{
-		// if pos goes out of X range
-			// if ball collides with player pawn
-				// velocity.X = -velocity.X
-			// else
-				// GOAL EVENT
 		if(position.Y <= 0 || position.Y + BALL_RADIUS >= PongGame.WINDOW_HEIGHT)
 			velocity.Y = -velocity.Y;
 		position.X += velocity.X;
 		position.Y += velocity.Y;
 	}
-
 
 	@Override
 	public void draw(Graphics g)
@@ -83,21 +93,6 @@ public class Ball implements Drawable
 	public void setVelocity(Vector2 velocity)
 	{
 		this.velocity = velocity;
-	}
-
-	public void addGoalObserver(Observer observer)
-	{
-		goalEvent.addObserver(observer);
-	}
-
-	public void deleteGoalObserver(Observer observer)
-	{
-		goalEvent.deleteObserver(observer);
-	}
-
-	public void notifyGoal(Player scoringPlayer)
-	{
-		goalEvent.goal(scoringPlayer);
 	}
 
 	public Color getColor()

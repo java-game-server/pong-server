@@ -21,7 +21,7 @@ public final class ApplicationProperties
 	static
 	{
 		String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-		String applicationPropertiesPath = rootPath + "application.properties";
+		String applicationPropertiesPath = rootPath + "com\\apporelbotna\\gameserver\\pongserver\\properties\\application.properties";
 
 		Properties applicationProperties = new Properties();
 		try

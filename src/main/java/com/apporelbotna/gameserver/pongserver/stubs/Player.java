@@ -46,6 +46,16 @@ public class Player
 		goals++;
 	}
 
+	public boolean isControlledPlayer()
+	{
+		return pawn.isControlledPawn();
+	}
+
+	public void setControlledPlayer(boolean isControlled)
+	{
+		pawn.setControlledPawn(isControlled);
+	}
+
 	public int getPosition()
 	{
 		return pawn.getPosition();

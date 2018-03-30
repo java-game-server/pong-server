@@ -36,6 +36,34 @@ public class SocketConnection
 		return writer;
 	}
 
+	public String readLine()
+	{
+		try
+		{
+			return reader.readLine();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public boolean write(String msg)
+	{
+		try
+		{
+			writer.write(msg + "\n");
+			writer.flush();
+			return true;
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public void close()
 	{
 		try

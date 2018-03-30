@@ -10,6 +10,11 @@ public class Vector2
 	public Vector2() { }
 	public Vector2(int X, int Y) { this.X = X; this.Y = Y; }
 
+	public static Vector2 of(int X, int Y)
+	{
+		return new Vector2(X, Y);
+	}
+
 	public Vector2 add(Vector2 other)
 	{
 		return new Vector2(this.X + other.X, this.Y + other.Y);

@@ -1,7 +1,5 @@
 package com.apporelbotna.gameserver.pongserver.stubs;
 
-import java.io.IOException;
-
 import com.apporelbotna.gameserver.pongserver.PlayerConnection;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,14 +8,24 @@ import com.google.gson.annotations.Expose;
 public class ServerMessage
 {
 	private PlayerConnection playerConnection;
-	@Expose private boolean gameFinished;
-	@Expose private Ball ball;
-	@Expose private Player enemy;
+
+	@Expose
+	private boolean gameFinished;
+
+	@Expose
+	private Ball ball;
+
+	@Expose
+	private Player player;
+
+	@Expose
+	private Player enemy;
 
 	public ServerMessage(PlayerConnection playerConnection, Ball ball, Player enemy)
 	{
 		this.playerConnection = playerConnection;
 		this.ball = ball;
+		this.player = this.playerConnection.getPlayer();
 		this.enemy = enemy;
 	}
 
@@ -31,23 +39,20 @@ public class ServerMessage
 		return ball;
 	}
 
+	public Player getPlayer()
+	{
+		return player;
+	}
+
 	public Player getEnemy()
 	{
 		return enemy;
 	}
 
-	public void send()
+	public boolean send()
 	{
-		try
-		{
-			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-			playerConnection.getWriter().write(gson.toJson(this)+"\n");
-			playerConnection.getWriter().flush();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		return playerConnection.write(gson.toJson(this));
 	}
 
 	public static ServerMessage fromJson(String json)

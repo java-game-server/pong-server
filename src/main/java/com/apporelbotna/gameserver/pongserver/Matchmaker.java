@@ -10,8 +10,16 @@ import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.apporelbotna.gameserver.pongserver.properties.ApplicationProperties;
 import com.apporelbotna.gameserver.pongserver.stubs.Player;
 
+/**
+ * This is the PongServer's main thread, which accepts connections from players and starts
+ * a new GameControllerThread each time two players are accepted.
+ *
+ * @author Jendoliver
+ *
+ */
 public class Matchmaker
 {
 	private static Queue<Player> playerQueue; // CHECK can this be filled by another thread?
@@ -22,7 +30,7 @@ public class Matchmaker
 		playerQueue = new LinkedList<>();
 		System.out.println(" Server is Running  ");
 
-		try (ServerSocket serverSocket = new ServerSocket(5555))
+		try (ServerSocket serverSocket = new ServerSocket(ApplicationProperties.getServerSocketPort()))
 		{
 			// REFACTOR me please i'm crying
 			while (playerQueue.size() < DDOS_HALT)

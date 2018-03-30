@@ -18,7 +18,7 @@ public class PlayerPawn implements Drawable
 												 * account (the y component)
 												 */
 	private boolean goingUp;
-	private boolean controlledPawn;
+	private boolean controlledPawn; // TODO rename
 	private Color color;
 
 	public PlayerPawn()
@@ -65,7 +65,7 @@ public class PlayerPawn implements Drawable
 	public void move()
 	{
 		if (goingUp)
-			position = position <= 0 ? position : position - 1;
+			position = position - 1 < 0 ? position : position - 1;
 		else
 			position = position + BAR_HEIGHT >= PongGame.WINDOW_HEIGHT ? position : position + 1;
 	}

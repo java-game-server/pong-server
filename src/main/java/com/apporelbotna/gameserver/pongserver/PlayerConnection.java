@@ -8,6 +8,12 @@ import com.apporelbotna.gameserver.pongserver.stubs.Player;
 import com.apporelbotna.gameserver.pongserver.stubs.ServerMessage;
 import com.apporelbotna.gameserver.pongserver.stubs.SocketConnection;
 
+/**
+ * This class provides a socket communication interface with a player.
+ *
+ * @author Jendoliver
+ *
+ */
 public class PlayerConnection extends SocketConnection
 {
 	private Player player;
@@ -23,8 +29,8 @@ public class PlayerConnection extends SocketConnection
 		return player;
 	}
 
-	public void sendGameInfo(Ball ballPosition, Player enemyPosition)
+	public boolean sendGameInfo(Ball ballPosition, Player enemyPosition)
 	{
-		new ServerMessage(this, ballPosition, enemyPosition).send();
+		return new ServerMessage(this, ballPosition, enemyPosition).send();
 	}
 }

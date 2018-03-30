@@ -1,38 +1,21 @@
 package com.apporelbotna.gameserver.pongserver;
 
 import com.apporelbotna.gameserver.pongserver.stubs.Player;
+import com.apporelbotna.gameserver.pongserver.stubs.PlayerMovementMessage;
 
+/**
+ * A simple struct representing a message from a player. It holds the sender player and the
+ * message, which can be GO_UP (1) or GO_DOWN (0)
+ *
+ * @author Jendoliver
+ *
+ */
 public class PlayerMessage
 {
-	public enum Message
-	{
-		GO_UP("1"), GO_DOWN("0");
-
-		private String text;
-
-		private Message(String text)
-		{
-			this.text = text;
-		}
-
-		public String getText()
-		{
-			return text;
-		}
-
-		public static Message fromStringCode(String code)
-		{
-			for(Message message : Message.values())
-				if(message.getText().equals(code))
-					return message;
-			throw new RuntimeException("The PlayerMessage#Message code " + code + " is not defined");
-		}
-	}
-
 	private Player player;
-	private Message message;
+	private PlayerMovementMessage message;
 
-	public PlayerMessage(Player player, Message message)
+	public PlayerMessage(Player player, PlayerMovementMessage message)
 	{
 		this.player = player;
 		this.message = message;
@@ -43,7 +26,7 @@ public class PlayerMessage
 		return player;
 	}
 
-	public Message getMessage()
+	public PlayerMovementMessage getMessage()
 	{
 		return message;
 	}
