@@ -6,7 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.Arrays;
+import java.util.logging.Level;
 
+import lombok.extern.java.Log;
+
+@Log
 public class SocketConnection
 {
 	protected Socket socket;
@@ -44,7 +49,7 @@ public class SocketConnection
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			log.log(Level.FINER, Arrays.toString(e.getStackTrace()), e);
 		}
 		return null;
 	}
@@ -59,7 +64,7 @@ public class SocketConnection
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			log.log(Level.FINER, Arrays.toString(e.getStackTrace()), e);
 		}
 		return false;
 	}
@@ -74,7 +79,7 @@ public class SocketConnection
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			log.log(Level.FINER, Arrays.toString(e.getStackTrace()), e);
 		}
 	}
 }

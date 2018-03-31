@@ -2,12 +2,16 @@ package com.apporelbotna.gameserver.pongserver.model;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.logging.Level;
 
 import com.apporelbotna.gameserver.pongserver.properties.ApplicationProperties;
 import com.apporelbotna.gameserver.pongserver.stubs.model.Player;
 import com.apporelbotna.gameserver.pongserver.stubs.net.SocketConnection;
+
+import lombok.extern.java.Log;
 
 /**
  * This is the PongServer's main thread, which accepts connections from players and starts
@@ -16,6 +20,7 @@ import com.apporelbotna.gameserver.pongserver.stubs.net.SocketConnection;
  * @author Jendoliver
  *
  */
+@Log
 public class Matchmaker
 {
 	private static Queue<Player> playerQueue; // CHECK can this be filled by another thread?
@@ -24,7 +29,7 @@ public class Matchmaker
 	public static void main(String[] args)
 	{
 		playerQueue = new LinkedList<>();
-		System.out.println(" Server is Running  ");
+		log.log(Level.INFO, "Server is running");
 
 		try (ServerSocket serverSocket = new ServerSocket(ApplicationProperties.getServerSocketPort()))
 		{
@@ -48,7 +53,7 @@ public class Matchmaker
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			log.log(Level.FINER, Arrays.toString(e.getStackTrace()), e);
 		}
 	}
 }

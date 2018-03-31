@@ -53,12 +53,12 @@ public class Player
 
 	public boolean isControlledPlayer()
 	{
-		return pawn.isControlledPawn();
+		return pawn.isControlledByClient();
 	}
 
 	public void setControlledPlayer(boolean isControlled)
 	{
-		pawn.setControlledPawn(isControlled);
+		pawn.setControlledByClient(isControlled);
 	}
 
 	public int getPosition()

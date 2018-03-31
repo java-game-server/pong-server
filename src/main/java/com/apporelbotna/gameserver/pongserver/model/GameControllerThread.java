@@ -1,10 +1,14 @@
 package com.apporelbotna.gameserver.pongserver.model;
 
+import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
 
 import com.apporelbotna.gameserver.pongserver.stubs.model.PongGame;
 import com.apporelbotna.gameserver.pongserver.stubs.net.PlayerMovementMessage;
+
+import lombok.extern.java.Log;
 
 /**
  * This is the Server's Game Controller. It manages the connection with both players, modifying
@@ -20,6 +24,7 @@ import com.apporelbotna.gameserver.pongserver.stubs.net.PlayerMovementMessage;
  * @author Jendoliver
  *
  */
+@Log
 public class GameControllerThread implements Runnable, Observer
 {
 	private static final long MS_BETWEEN_PHYSICS_UPDATE = 5;
@@ -27,7 +32,7 @@ public class GameControllerThread implements Runnable, Observer
 	private PlayerCommunicationChannel playerCommunicationChannel1;
 	private PlayerCommunicationChannel playerCommunicationChannel2;
 	private PongGame pongGame;
-	// private GameDAO gameDAO;
+	// private GameDAO gameDAO; TODO add when WS Client is finished
 
 	public GameControllerThread(PlayerConnection playerConn1, PlayerConnection playerConn2)
 	{
@@ -53,18 +58,20 @@ public class GameControllerThread implements Runnable, Observer
 			}
 			catch (InterruptedException e)
 			{
-				e.printStackTrace();
+				log.log(Level.FINER, Arrays.toString(e.getStackTrace()), e);
 				Thread.currentThread().interrupt();
 				break;
 			}
 			pongGame.updatePhysics();
 
 			isFirstPlayerConnectionOk = playerCommunicationChannel1.sendGameInfo(
+					pongGame.hasGameEnded(),
 					pongGame.getBall(),
 					pongGame.getPlayer2());
 			pongGame.setBall(pongGame.getBall().mirrorPositionX());
 
 			isSecondPlayerConnectionOk = playerCommunicationChannel2.sendGameInfo(
+					pongGame.hasGameEnded(),
 					pongGame.getBall(),
 					pongGame.getPlayer1());
 			pongGame.setBall(pongGame.getBall().mirrorPositionX());
@@ -73,7 +80,7 @@ public class GameControllerThread implements Runnable, Observer
 				break;
 		}
 
-		// Actualizar bbdd con ganador (GameDAO) y demas mierdas
+		log.log(Level.INFO, pongGame.getWinner().toString());
 
 	}
 

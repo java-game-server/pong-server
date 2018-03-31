@@ -14,8 +14,7 @@ public class Ball implements Drawable
 
 	private final int goalMargin;
 
-	@Expose
-	private Vector2 position;
+	@Expose private Vector2 position;
 	private Vector2 velocity;
 	private Color color;
 
