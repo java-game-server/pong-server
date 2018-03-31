@@ -47,8 +47,6 @@ public class GameControllerThread implements Runnable, Observer
 
 		while (!pongGame.hasGameEnded())
 		{
-			// FIXME esto pegara un pedo brutal porque el thread esta bloqueado escuchando pero wenooo
-			// SYYY??? ajajjajj
 			try
 			{
 				Thread.sleep(MS_BETWEEN_PHYSICS_UPDATE);
@@ -64,10 +62,12 @@ public class GameControllerThread implements Runnable, Observer
 			isFirstPlayerConnectionOk = playerCommunicationChannel1.sendGameInfo(
 					pongGame.getBall(),
 					pongGame.getPlayer2());
+			pongGame.setBall(pongGame.getBall().mirrorPositionX());
 
 			isSecondPlayerConnectionOk = playerCommunicationChannel2.sendGameInfo(
 					pongGame.getBall(),
 					pongGame.getPlayer1());
+			pongGame.setBall(pongGame.getBall().mirrorPositionX());
 
 			if(!isFirstPlayerConnectionOk || !isSecondPlayerConnectionOk)
 				break;

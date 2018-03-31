@@ -35,6 +35,11 @@ public class PongGame
 		return ball;
 	}
 
+	public void setBall(Ball ball)
+	{
+		this.ball = ball;
+	}
+
 	public Player getWinner()
 	{
 		return winner;
@@ -47,7 +52,8 @@ public class PongGame
 
 		if(ball.isAboutToEnterGoalArea())
 		{
-			if(ball.collidesWith(player1.getPawn()) || ball.collidesWith(player2.getPawn()))
+			Player collidingPlayer = ball.collidesWithAny(player1, player2);
+			if(collidingPlayer != null)
 				ball.getVelocity().X = -ball.getVelocity().X;
 			else
 			{

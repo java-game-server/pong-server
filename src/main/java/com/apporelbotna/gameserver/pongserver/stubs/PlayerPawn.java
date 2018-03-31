@@ -18,7 +18,7 @@ public class PlayerPawn implements Drawable
 												 * account (the y component)
 												 */
 	private boolean goingUp;
-	private boolean controlledPawn; // TODO rename
+	private boolean controlledPawn; // TODO rename to reflect client player possession
 	private Color color;
 
 	public PlayerPawn()
