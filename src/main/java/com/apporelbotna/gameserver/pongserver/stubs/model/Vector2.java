@@ -1,4 +1,4 @@
-package com.apporelbotna.gameserver.pongserver.stubs;
+package com.apporelbotna.gameserver.pongserver.stubs.model;
 
 import com.google.gson.annotations.Expose;
 

@@ -1,7 +1,7 @@
-package com.apporelbotna.gameserver.pongserver;
+package com.apporelbotna.gameserver.pongserver.model;
 
-import com.apporelbotna.gameserver.pongserver.stubs.Player;
-import com.apporelbotna.gameserver.pongserver.stubs.PlayerMovementMessage;
+import com.apporelbotna.gameserver.pongserver.stubs.model.Player;
+import com.apporelbotna.gameserver.pongserver.stubs.net.PlayerMovementMessage;
 
 /**
  * A simple struct representing a message from a player. It holds the sender player and the

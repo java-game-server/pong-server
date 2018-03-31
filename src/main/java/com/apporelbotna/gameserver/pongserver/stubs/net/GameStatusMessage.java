@@ -1,6 +1,8 @@
-package com.apporelbotna.gameserver.pongserver.stubs;
+package com.apporelbotna.gameserver.pongserver.stubs.net;
 
-import com.apporelbotna.gameserver.pongserver.PlayerConnection;
+import com.apporelbotna.gameserver.pongserver.model.PlayerConnection;
+import com.apporelbotna.gameserver.pongserver.stubs.model.Ball;
+import com.apporelbotna.gameserver.pongserver.stubs.model.Player;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;

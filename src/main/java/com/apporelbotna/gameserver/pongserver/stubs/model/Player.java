@@ -1,4 +1,4 @@
-package com.apporelbotna.gameserver.pongserver.stubs;
+package com.apporelbotna.gameserver.pongserver.stubs.model;
 
 import java.awt.Graphics;
 
@@ -44,6 +44,11 @@ public class Player
 	public void addGoal()
 	{
 		goals++;
+	}
+
+	public boolean hasWon()
+	{
+		return goals >= PongGame.GOALS_TO_WIN;
 	}
 
 	public boolean isControlledPlayer()

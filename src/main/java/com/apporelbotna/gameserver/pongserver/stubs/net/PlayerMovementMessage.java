@@ -1,4 +1,4 @@
-package com.apporelbotna.gameserver.pongserver.stubs;
+package com.apporelbotna.gameserver.pongserver.stubs.net;
 
 public enum PlayerMovementMessage
 {

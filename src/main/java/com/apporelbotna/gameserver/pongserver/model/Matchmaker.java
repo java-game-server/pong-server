@@ -1,4 +1,4 @@
-package com.apporelbotna.gameserver.pongserver;
+package com.apporelbotna.gameserver.pongserver.model;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -6,8 +6,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.apporelbotna.gameserver.pongserver.properties.ApplicationProperties;
-import com.apporelbotna.gameserver.pongserver.stubs.Player;
-import com.apporelbotna.gameserver.pongserver.stubs.SocketConnection;
+import com.apporelbotna.gameserver.pongserver.stubs.model.Player;
+import com.apporelbotna.gameserver.pongserver.stubs.net.SocketConnection;
 
 /**
  * This is the PongServer's main thread, which accepts connections from players and starts

@@ -1,4 +1,4 @@
-package com.apporelbotna.gameserver.pongserver.stubs;
+package com.apporelbotna.gameserver.pongserver.stubs.model;
 
 public class PongGame
 {
@@ -61,6 +61,7 @@ public class PongGame
 					player2.addGoal();
 				else
 					player1.addGoal();
+				winner = player1.hasWon() ? player1 : player2.hasWon() ? player2 : null;
 				ball.spawnAtCenter();
 			}
 		}

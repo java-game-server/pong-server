@@ -1,11 +1,11 @@
-package com.apporelbotna.gameserver.pongserver;
+package com.apporelbotna.gameserver.pongserver.model;
 
 import java.util.Observable;
 import java.util.Observer;
 
-import com.apporelbotna.gameserver.pongserver.stubs.Ball;
-import com.apporelbotna.gameserver.pongserver.stubs.Player;
-import com.apporelbotna.gameserver.pongserver.stubs.PlayerMovementMessage;
+import com.apporelbotna.gameserver.pongserver.stubs.model.Ball;
+import com.apporelbotna.gameserver.pongserver.stubs.model.Player;
+import com.apporelbotna.gameserver.pongserver.stubs.net.PlayerMovementMessage;
 
 /**
  * This class serves as a constant player message listener. It will broadcast a

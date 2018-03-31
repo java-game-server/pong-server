@@ -1,10 +1,10 @@
-package com.apporelbotna.gameserver.pongserver;
+package com.apporelbotna.gameserver.pongserver.model;
 
 import java.util.Observable;
 import java.util.Observer;
 
-import com.apporelbotna.gameserver.pongserver.stubs.PlayerMovementMessage;
-import com.apporelbotna.gameserver.pongserver.stubs.PongGame;
+import com.apporelbotna.gameserver.pongserver.stubs.model.PongGame;
+import com.apporelbotna.gameserver.pongserver.stubs.net.PlayerMovementMessage;
 
 /**
  * This is the Server's Game Controller. It manages the connection with both players, modifying

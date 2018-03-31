@@ -1,12 +1,12 @@
-package com.apporelbotna.gameserver.pongserver;
+package com.apporelbotna.gameserver.pongserver.model;
 
 import java.io.IOException;
 import java.net.Socket;
 
-import com.apporelbotna.gameserver.pongserver.stubs.Ball;
-import com.apporelbotna.gameserver.pongserver.stubs.Player;
-import com.apporelbotna.gameserver.pongserver.stubs.GameStatusMessage;
-import com.apporelbotna.gameserver.pongserver.stubs.SocketConnection;
+import com.apporelbotna.gameserver.pongserver.stubs.model.Ball;
+import com.apporelbotna.gameserver.pongserver.stubs.model.Player;
+import com.apporelbotna.gameserver.pongserver.stubs.net.GameStatusMessage;
+import com.apporelbotna.gameserver.pongserver.stubs.net.SocketConnection;
 
 /**
  * This class provides a socket communication interface with a player.
