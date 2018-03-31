@@ -48,9 +48,9 @@ public class PlayerCommunicationChannel implements Runnable
 		return playerConnection.getPlayer();
 	}
 
-	public boolean sendGameInfo(Ball ballPosition, Player enemyPosition)
+	public boolean sendGameInfo(boolean hasGameEnded, Ball ballPosition, Player enemyPosition)
 	{
-		return playerConnection.sendGameInfo(ballPosition, enemyPosition);
+		return playerConnection.sendGameInfo(hasGameEnded, ballPosition, enemyPosition);
 	}
 
 	@Override

@@ -1,5 +1,11 @@
 package com.apporelbotna.gameserver.pongserver.stubs.net;
 
+import java.util.Arrays;
+import java.util.logging.Level;
+
+import lombok.extern.java.Log;
+
+@Log
 public enum PlayerMovementMessage
 {
 	GO_UP("1"), GO_DOWN("0");
@@ -18,9 +24,12 @@ public enum PlayerMovementMessage
 
 	public static PlayerMovementMessage fromStringCode(String code)
 	{
-		for(PlayerMovementMessage message : PlayerMovementMessage.values())
-			if(message.getText().equals(code))
+		for (PlayerMovementMessage message : PlayerMovementMessage.values())
+			if (message.getText().equals(code))
 				return message;
-		throw new RuntimeException("The PlayerMessage#Message code " + code + " is not defined");
+		RuntimeException exception = new RuntimeException(
+				"The PlayerMessage#Message code " + code + " is not defined");
+		log.log(Level.FINER, Arrays.toString(exception.getStackTrace()), exception);
+		throw exception;
 	}
 }

@@ -24,9 +24,10 @@ public class GameStatusMessage
 	@Expose
 	private Player enemy;
 
-	public GameStatusMessage(PlayerConnection playerConnection, Ball ball, Player enemy)
+	public GameStatusMessage(PlayerConnection playerConnection, boolean gameFinished, Ball ball, Player enemy)
 	{
 		this.playerConnection = playerConnection;
+		this.gameFinished = gameFinished;
 		this.ball = ball;
 		this.player = this.playerConnection.getPlayer();
 		this.enemy = enemy;

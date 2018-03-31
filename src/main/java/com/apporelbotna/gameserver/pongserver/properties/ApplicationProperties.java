@@ -2,16 +2,22 @@ package com.apporelbotna.gameserver.pongserver.properties;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Properties;
+import java.util.logging.Level;
 
+import lombok.Getter;
+import lombok.extern.java.Log;
+
+@Log
 public final class ApplicationProperties
 {
-	private static String version;
-	private static String name;
+	@Getter private static String version;
+	@Getter private static String name;
 
-	private static String serverIp;
-	private static int serverSocketPort;
-	private static int serverMaxPlayers;
+	@Getter private static String serverIp;
+	@Getter private static int serverSocketPort;
+	@Getter private static int serverMaxPlayers;
 
 	private ApplicationProperties()
 	{
@@ -36,32 +42,7 @@ public final class ApplicationProperties
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			log.log(Level.FINER, Arrays.toString(e.getStackTrace()), e);
 		}
-	}
-
-	public static String getVersion()
-	{
-		return version;
-	}
-
-	public static String getName()
-	{
-		return name;
-	}
-
-	public static String getServerIp()
-	{
-		return serverIp;
-	}
-
-	public static int getServerSocketPort()
-	{
-		return serverSocketPort;
-	}
-
-	public static int getServerMaxPlayers()
-	{
-		return serverMaxPlayers;
 	}
 }

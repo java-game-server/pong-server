@@ -18,7 +18,7 @@ public class PlayerPawn implements Drawable
 												 * account (the y component)
 												 */
 	private boolean goingUp;
-	private boolean controlledPawn; // TODO rename to reflect client player possession
+	private boolean isControlledByClient;
 	private Color color;
 
 	public PlayerPawn()
@@ -52,14 +52,14 @@ public class PlayerPawn implements Drawable
 		this.goingUp = goingUp;
 	}
 
-	public boolean isControlledPawn()
+	public boolean isControlledByClient()
 	{
-		return controlledPawn;
+		return isControlledByClient;
 	}
 
-	public void setControlledPawn(boolean controlledPawn)
+	public void setControlledByClient(boolean controlledByClient)
 	{
-		this.controlledPawn = controlledPawn;
+		this.isControlledByClient = controlledByClient;
 	}
 
 	public void move()
@@ -80,7 +80,7 @@ public class PlayerPawn implements Drawable
 	{
 		g.setColor(color);
 		g.fillRect(
-				controlledPawn ? MARGIN_LEFT_RIGHT : PongGame.WINDOW_WIDTH - MARGIN_LEFT_RIGHT - BAR_WIDTH,
+				isControlledByClient ? MARGIN_LEFT_RIGHT : PongGame.WINDOW_WIDTH - MARGIN_LEFT_RIGHT - BAR_WIDTH,
 				position,
 				BAR_WIDTH,
 				BAR_HEIGHT

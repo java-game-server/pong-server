@@ -8,6 +8,8 @@ import com.apporelbotna.gameserver.pongserver.stubs.model.Player;
 import com.apporelbotna.gameserver.pongserver.stubs.net.GameStatusMessage;
 import com.apporelbotna.gameserver.pongserver.stubs.net.SocketConnection;
 
+import lombok.Getter;
+
 /**
  * This class provides a socket communication interface with a player.
  *
@@ -16,7 +18,7 @@ import com.apporelbotna.gameserver.pongserver.stubs.net.SocketConnection;
  */
 public class PlayerConnection extends SocketConnection
 {
-	private Player player;
+	@Getter private Player player;
 
 	public PlayerConnection(Player player, Socket socket) throws IOException
 	{
@@ -24,13 +26,8 @@ public class PlayerConnection extends SocketConnection
 		this.player = player;
 	}
 
-	public Player getPlayer()
+	public boolean sendGameInfo(boolean hasGameEnded, Ball ballPosition, Player enemyPosition)
 	{
-		return player;
-	}
-
-	public boolean sendGameInfo(Ball ballPosition, Player enemyPosition)
-	{
-		return new GameStatusMessage(this, ballPosition, enemyPosition).send();
+		return new GameStatusMessage(this, hasGameEnded, ballPosition, enemyPosition).send();
 	}
 }
