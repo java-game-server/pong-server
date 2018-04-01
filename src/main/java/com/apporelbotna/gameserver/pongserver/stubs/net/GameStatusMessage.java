@@ -1,35 +1,28 @@
 package com.apporelbotna.gameserver.pongserver.stubs.net;
 
-import com.apporelbotna.gameserver.pongserver.model.PlayerConnection;
 import com.apporelbotna.gameserver.pongserver.stubs.model.Ball;
 import com.apporelbotna.gameserver.pongserver.stubs.model.Player;
+import com.apporelbotna.gameserver.pongserver.stubs.net.gson.AnnotationExclusionStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.annotations.Expose;
 
-public class GameStatusMessage
+public class GameStatusMessage implements Message
 {
-	private PlayerConnection playerConnection;
-
-	@Expose
 	private boolean gameFinished;
-
-	@Expose
 	private Ball ball;
-
-	@Expose
 	private Player player;
-
-	@Expose
 	private Player enemy;
 
-	public GameStatusMessage(PlayerConnection playerConnection, boolean gameFinished, Ball ball, Player enemy)
+	public GameStatusMessage(
+			boolean gameFinished,
+			Ball ball,
+			Player player,
+			Player enemy)
 	{
-		this.playerConnection = playerConnection;
 		this.gameFinished = gameFinished;
 		this.ball = ball;
-		this.player = this.playerConnection.getPlayer();
+		this.player = player;
 		this.enemy = enemy;
 	}
 
@@ -53,12 +46,6 @@ public class GameStatusMessage
 		return enemy;
 	}
 
-	public boolean send()
-	{
-		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-		return playerConnection.write(gson.toJson(this));
-	}
-
 	public static GameStatusMessage fromJson(String json)
 	{
 		return new Gson().fromJson(json, GameStatusMessage.class);
@@ -78,9 +65,22 @@ public class GameStatusMessage
 	}
 
 	@Override
-	public String toString()
+	public String serialize()
 	{
-		return "ServerMessage [gameFinished=" + gameFinished + ", ball=" + ball + ", enemy=" + enemy
-				+ "]";
+		Gson gson = new GsonBuilder().setExclusionStrategies(new AnnotationExclusionStrategy())
+				.create();
+		return gson.toJson(this);
+	}
+
+	@Override
+	public GameStatusMessage deserialize(String serializedMessage)
+	{
+		return fromJson(serializedMessage);
+	}
+
+	@Override
+	public boolean canDeserialize(String serializedMessage)
+	{
+		return canCreateFromJson(serializedMessage);
 	}
 }

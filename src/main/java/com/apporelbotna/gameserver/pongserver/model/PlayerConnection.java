@@ -26,8 +26,12 @@ public class PlayerConnection extends SocketConnection
 		this.player = player;
 	}
 
-	public boolean sendGameInfo(boolean hasGameEnded, Ball ballPosition, Player enemyPosition)
+	public boolean sendGameInfo(boolean hasGameEnded, Ball ballPosition, Player enemy)
 	{
-		return new GameStatusMessage(this, hasGameEnded, ballPosition, enemyPosition).send();
+		return send(new GameStatusMessage(
+				hasGameEnded,
+				ballPosition,
+				player,
+				enemy));
 	}
 }

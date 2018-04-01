@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import lombok.extern.java.Log;
 
 @Log
-public enum PlayerMovementMessage
+public enum PlayerMovementMessage implements Message
 {
 	GO_UP("1"), GO_DOWN("0");
 
@@ -31,5 +31,26 @@ public enum PlayerMovementMessage
 				"The PlayerMessage#Message code " + code + " is not defined");
 		log.log(Level.FINER, Arrays.toString(exception.getStackTrace()), exception);
 		throw exception;
+	}
+
+	@Override
+	public String serialize()
+	{
+		return getText();
+	}
+
+	@Override
+	public PlayerMovementMessage deserialize(String serializedMessage)
+	{
+		return fromStringCode(serializedMessage);
+	}
+
+	@Override
+	public boolean canDeserialize(String serializedMessage)
+	{
+		for (PlayerMovementMessage message : PlayerMovementMessage.values())
+			if (message.getText().equals(serializedMessage))
+				return true;
+		return false;
 	}
 }
