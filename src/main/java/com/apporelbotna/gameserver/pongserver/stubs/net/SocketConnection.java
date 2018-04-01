@@ -54,6 +54,30 @@ public class SocketConnection
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
+	public <T extends Message> T readMessage(Class<T> messageClass)
+	{
+		String serializedMessage = readLine();
+		T message;
+		try
+		{
+			message = messageClass.newInstance();
+		}
+		catch (InstantiationException | IllegalAccessException e)
+		{
+			log.log(Level.FINER, "Could not instantiate provided messageClass", e);
+			return null;
+		}
+		if(message.canDeserialize(serializedMessage))
+			return (T)message.deserialize(serializedMessage);
+		return null;
+	}
+
+	public boolean send(Message message)
+	{
+		return write(message.serialize());
+	}
+
 	public boolean write(String msg)
 	{
 		try

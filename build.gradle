@@ -20,6 +20,9 @@ repositories {
 }
 
 dependencies {
+	// PongServer
+	compile 'com.github.java-game-server:pong-server:0.1.5'
+
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:21.0'
 

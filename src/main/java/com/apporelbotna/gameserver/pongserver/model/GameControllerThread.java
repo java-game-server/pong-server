@@ -80,7 +80,7 @@ public class GameControllerThread implements Runnable, Observer
 				break;
 		}
 
-		log.log(Level.INFO, pongGame.getWinner().toString());
+		log.log(Level.INFO, "Winner: " + pongGame.getWinner().getUsername());
 
 	}
 
