@@ -3,12 +3,10 @@ package com.apporelbotna.gameserver.pongserver.model;
 import java.io.IOException;
 import java.net.Socket;
 
-import com.apporelbotna.gameserver.pongserver.stubs.model.Ball;
 import com.apporelbotna.gameserver.pongserver.stubs.model.Player;
+import com.apporelbotna.gameserver.pongserver.stubs.model.PongGame;
 import com.apporelbotna.gameserver.pongserver.stubs.net.GameStatusMessage;
 import com.apporelbotna.gameserver.pongserver.stubs.net.SocketConnection;
-
-import lombok.Getter;
 
 /**
  * This class provides a socket communication interface with a player.
@@ -18,7 +16,7 @@ import lombok.Getter;
  */
 public class PlayerConnection extends SocketConnection
 {
-	@Getter private Player player;
+	private Player player;
 
 	public PlayerConnection(Player player, Socket socket) throws IOException
 	{
@@ -26,12 +24,13 @@ public class PlayerConnection extends SocketConnection
 		this.player = player;
 	}
 
-	public boolean sendGameInfo(boolean hasGameEnded, Ball ballPosition, Player enemy)
+	public boolean sendGameInfo(PongGame pongGame)
 	{
-		return send(new GameStatusMessage(
-				hasGameEnded,
-				ballPosition,
-				player,
-				enemy));
+		return send(new GameStatusMessage(pongGame, player));
+	}
+
+	public Player getPlayer()
+	{
+		return player;
 	}
 }

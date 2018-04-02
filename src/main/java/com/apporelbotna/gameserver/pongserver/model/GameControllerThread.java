@@ -1,19 +1,18 @@
 package com.apporelbotna.gameserver.pongserver.model;
 
-import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.apporelbotna.gameserver.pongserver.stubs.model.PongGame;
 import com.apporelbotna.gameserver.pongserver.stubs.net.PlayerMovementMessage;
 
-import lombok.extern.java.Log;
-
 /**
- * This is the Server's Game Controller. It manages the connection with both players, modifying
- * the PongGame instance (thus affecting game logic) when a player intent is received and notifying
- * them constantly about any change in the model.
+ * This is the Server's Game Controller. It manages the connection with both players, modifying the
+ * PongGame instance (thus affecting game logic) when a player intent is received and notifying them
+ * constantly about any change in the model.
  *
  * When a GameControllerThread is started, two communication threads are started as well. These
  * threads will notify GameControllerThread when a player message is received via Observer pattern.
@@ -24,10 +23,9 @@ import lombok.extern.java.Log;
  * @author Jendoliver
  *
  */
-@Log
 public class GameControllerThread implements Runnable, Observer
 {
-	private static final long MS_BETWEEN_PHYSICS_UPDATE = 5;
+	private static final Logger logger = LoggerFactory.getLogger(GameControllerThread.class);
 
 	private PlayerCommunicationChannel playerCommunicationChannel1;
 	private PlayerCommunicationChannel playerCommunicationChannel2;
@@ -52,36 +50,18 @@ public class GameControllerThread implements Runnable, Observer
 
 		while (!pongGame.hasGameEnded())
 		{
-			try
-			{
-				Thread.sleep(MS_BETWEEN_PHYSICS_UPDATE);
-			}
-			catch (InterruptedException e)
-			{
-				log.log(Level.FINER, Arrays.toString(e.getStackTrace()), e);
-				Thread.currentThread().interrupt();
-				break;
-			}
 			pongGame.updatePhysics();
 
-			isFirstPlayerConnectionOk = playerCommunicationChannel1.sendGameInfo(
-					pongGame.hasGameEnded(),
-					pongGame.getBall(),
-					pongGame.getPlayer2());
+			isFirstPlayerConnectionOk = playerCommunicationChannel1.sendGameInfo(pongGame);
 			pongGame.setBall(pongGame.getBall().mirrorPositionX());
 
-			isSecondPlayerConnectionOk = playerCommunicationChannel2.sendGameInfo(
-					pongGame.hasGameEnded(),
-					pongGame.getBall(),
-					pongGame.getPlayer1());
+			isSecondPlayerConnectionOk = playerCommunicationChannel2.sendGameInfo(pongGame);
 			pongGame.setBall(pongGame.getBall().mirrorPositionX());
 
-			if(!isFirstPlayerConnectionOk || !isSecondPlayerConnectionOk)
+			if (!isFirstPlayerConnectionOk || !isSecondPlayerConnectionOk)
 				break;
 		}
-
-		log.log(Level.INFO, "Winner: " + pongGame.getWinner().getUsername());
-
+		logger.info("Winner: " + pongGame.getWinner().getUsername());
 	}
 
 	@Override

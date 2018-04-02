@@ -3,8 +3,8 @@ package com.apporelbotna.gameserver.pongserver.model;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.apporelbotna.gameserver.pongserver.stubs.model.Ball;
 import com.apporelbotna.gameserver.pongserver.stubs.model.Player;
+import com.apporelbotna.gameserver.pongserver.stubs.model.PongGame;
 import com.apporelbotna.gameserver.pongserver.stubs.net.PlayerMovementMessage;
 
 /**
@@ -48,9 +48,9 @@ public class PlayerCommunicationChannel implements Runnable
 		return playerConnection.getPlayer();
 	}
 
-	public boolean sendGameInfo(boolean hasGameEnded, Ball ballPosition, Player enemy)
+	public boolean sendGameInfo(PongGame pongGame)
 	{
-		return playerConnection.sendGameInfo(hasGameEnded, ballPosition, enemy);
+		return playerConnection.sendGameInfo(pongGame);
 	}
 
 	@Override

@@ -1,14 +1,15 @@
 package com.apporelbotna.gameserver.pongserver.stubs.net;
 
-import java.util.Arrays;
-import java.util.logging.Level;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import lombok.extern.java.Log;
+import com.apporelbotna.gameserver.pongserver.model.GameControllerThread;
 
-@Log
 public enum PlayerMovementMessage implements Message
 {
 	GO_UP("1"), GO_DOWN("0");
+
+	private static final Logger logger = LoggerFactory.getLogger(GameControllerThread.class);
 
 	private String text;
 
@@ -29,7 +30,7 @@ public enum PlayerMovementMessage implements Message
 				return message;
 		RuntimeException exception = new RuntimeException(
 				"The PlayerMessage#Message code " + code + " is not defined");
-		log.log(Level.FINER, Arrays.toString(exception.getStackTrace()), exception);
+		logger.error(exception.getMessage());
 		throw exception;
 	}
 

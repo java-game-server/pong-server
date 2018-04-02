@@ -6,14 +6,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.util.Arrays;
-import java.util.logging.Level;
 
-import lombok.extern.java.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Log
+import com.apporelbotna.gameserver.pongserver.model.GameControllerThread;
+
 public class SocketConnection
 {
+	private static final Logger logger = LoggerFactory.getLogger(GameControllerThread.class);
+
 	protected Socket socket;
 	protected BufferedReader reader;
 	protected BufferedWriter writer;
@@ -49,7 +51,7 @@ public class SocketConnection
 		}
 		catch (IOException e)
 		{
-			log.log(Level.FINER, Arrays.toString(e.getStackTrace()), e);
+			logger.error(e.getMessage());
 		}
 		return null;
 	}
@@ -65,7 +67,7 @@ public class SocketConnection
 		}
 		catch (InstantiationException | IllegalAccessException e)
 		{
-			log.log(Level.FINER, "Could not instantiate provided messageClass", e);
+			logger.error(e.getMessage());
 			return null;
 		}
 		if(message.canDeserialize(serializedMessage))
@@ -88,7 +90,7 @@ public class SocketConnection
 		}
 		catch (IOException e)
 		{
-			log.log(Level.FINER, Arrays.toString(e.getStackTrace()), e);
+			logger.error(e.getMessage());
 		}
 		return false;
 	}
@@ -103,7 +105,7 @@ public class SocketConnection
 		}
 		catch (IOException e)
 		{
-			log.log(Level.FINER, Arrays.toString(e.getStackTrace()), e);
+			logger.error(e.getMessage());
 		}
 	}
 }
