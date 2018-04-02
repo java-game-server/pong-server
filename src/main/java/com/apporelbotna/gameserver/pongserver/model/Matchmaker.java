@@ -21,7 +21,7 @@ import com.apporelbotna.gameserver.pongserver.stubs.net.SocketConnection;
  */
 public class Matchmaker
 {
-	private static final Logger logger = LoggerFactory.getLogger(GameControllerThread.class);
+	private static final Logger logger = LoggerFactory.getLogger(Matchmaker.class);
 
 	private static Queue<Player> playerQueue; // CHECK can this be filled by another thread?
 	private static final int DDOS_HALT = 1000;

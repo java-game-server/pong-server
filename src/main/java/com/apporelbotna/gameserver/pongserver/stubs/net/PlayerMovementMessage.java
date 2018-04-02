@@ -3,13 +3,11 @@ package com.apporelbotna.gameserver.pongserver.stubs.net;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.apporelbotna.gameserver.pongserver.model.GameControllerThread;
-
 public enum PlayerMovementMessage implements Message
 {
 	GO_UP("1"), GO_DOWN("0");
 
-	private static final Logger logger = LoggerFactory.getLogger(GameControllerThread.class);
+	private static final Logger logger = LoggerFactory.getLogger(PlayerMovementMessage.class);
 
 	private String text;
 

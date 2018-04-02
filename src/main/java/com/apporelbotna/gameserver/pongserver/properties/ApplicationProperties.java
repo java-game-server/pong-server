@@ -7,11 +7,9 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.apporelbotna.gameserver.pongserver.model.GameControllerThread;
-
 public final class ApplicationProperties
 {
-	private static final Logger logger = LoggerFactory.getLogger(GameControllerThread.class);
+	private static final Logger logger = LoggerFactory.getLogger(ApplicationProperties.class);
 
 	private static String version;
 	private static String name;
