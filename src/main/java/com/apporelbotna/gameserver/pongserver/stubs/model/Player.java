@@ -2,23 +2,31 @@ package com.apporelbotna.gameserver.pongserver.stubs.model;
 
 import java.awt.Graphics;
 
+import com.apporelbotna.gameserver.stubs.Token;
+import com.apporelbotna.gameserver.stubs.User;
+import com.apporelbotna.gameserver.stubs.UserWrapper;
 import com.google.gson.annotations.Expose;
 
 public class Player
 {
-	private String username;
+	private UserWrapper userWrapper;
 	@Expose private PlayerPawn pawn;
 	private int goals;
 
-	public Player(String username)
+	public Player(UserWrapper userWrapper)
 	{
-		this.username = username;
+		this.userWrapper = userWrapper;
 		pawn = new PlayerPawn();
 	}
 
-	public String getUsername()
+	public Player(String email, String tokenKey)
 	{
-		return username;
+		this(new UserWrapper(new User(email), new Token(tokenKey)));
+	}
+
+	public UserWrapper getUserWrapper()
+	{
+		return userWrapper;
 	}
 
 	public PlayerPawn getPawn()
@@ -39,6 +47,16 @@ public class Player
 	public void setGoals(int goals)
 	{
 		this.goals = goals;
+	}
+
+	public String getName()
+	{
+		return userWrapper.getUser().getName();
+	}
+
+	public String getEmail()
+	{
+		return userWrapper.getUser().getEmail();
 	}
 
 	public void addGoal()
@@ -101,7 +119,7 @@ public class Player
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		result = prime * result + ((userWrapper == null) ? 0 : userWrapper.hashCode());
 		return result;
 	}
 
@@ -115,12 +133,12 @@ public class Player
 		if (getClass() != obj.getClass())
 			return false;
 		Player other = (Player)obj;
-		if (username == null)
+		if (userWrapper == null)
 		{
-			if (other.username != null)
+			if (other.userWrapper != null)
 				return false;
 		}
-		else if (!username.equals(other.username))
+		else if (!userWrapper.equals(other.userWrapper))
 			return false;
 		return true;
 	}

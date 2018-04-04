@@ -61,7 +61,8 @@ public class GameControllerThread implements Runnable, Observer
 			if (!isFirstPlayerConnectionOk || !isSecondPlayerConnectionOk)
 				break;
 		}
-		logger.info("Winner: " + pongGame.getWinner().getUsername());
+		logger.info("Winner: " + pongGame.getWinner().getName());
+		// PongGameService.getInstance().uploadMatchToDatabase(pongGame); TODO add when WSClient ready
 	}
 
 	@Override

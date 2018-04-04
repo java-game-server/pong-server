@@ -59,6 +59,11 @@ public class PongGame
 		return winner;
 	}
 
+	public long getGameTimeInMillis()
+	{
+		return System.currentTimeMillis() - beginPlayTime;
+	}
+
 	public void updatePhysics()
 	{
 		// TODO implement
