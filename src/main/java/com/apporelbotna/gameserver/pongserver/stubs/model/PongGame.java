@@ -1,15 +1,17 @@
 package com.apporelbotna.gameserver.pongserver.stubs.model;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class PongGame
 {
 	private static final Logger logger = LoggerFactory.getLogger(PongGame.class);
-	private static final long MS_BETWEEN_PHYSICS_UPDATE = 5;
+	private static final long MS_BETWEEN_PHYSICS_UPDATE = 3;
 
-	public static final int WINDOW_WIDTH = 1080; // TODO give sensible value
-	public static final int WINDOW_HEIGHT = 800; // TODO give sensible value
+	public static final int WINDOW_WIDTH = 800; // TODO give sensible value
+	public static final int WINDOW_HEIGHT = 600; // TODO give sensible value
 
 	public static final int GOALS_TO_WIN = 5;
 
@@ -17,7 +19,8 @@ public class PongGame
 	private Player player2;
 	private Ball ball;
 
-	private long lastTick;
+	private long beginPlayTime;
+	private long lastTick; // TODO use instead of Thread.sleep
 
 	private Player winner = null;
 	private boolean terminateGame;
@@ -27,7 +30,8 @@ public class PongGame
 		this.player1 = player1;
 		this.player2 = player2;
 		ball = new Ball();
-		lastTick = System.currentTimeMillis();
+		beginPlayTime = System.currentTimeMillis();
+		lastTick = beginPlayTime;
 	}
 
 	public Player getPlayer1()
@@ -57,9 +61,12 @@ public class PongGame
 
 	public void updatePhysics()
 	{
-		long deltaTime = System.currentTimeMillis() - lastTick;
-		lastTick = System.currentTimeMillis();
-		if(deltaTime < MS_BETWEEN_PHYSICS_UPDATE) return;
+		// TODO implement
+//		long now = System.currentTimeMillis();
+//		long deltaTime = now - lastTick;
+//		lastTick = now;
+//		if (deltaTime < MS_BETWEEN_PHYSICS_UPDATE)
+//			return;
 
 		try
 		{
@@ -74,27 +81,37 @@ public class PongGame
 
 		player1.move();
 		player2.move();
-
-		if(ball.isAboutToEnterGoalArea())
-		{
-			Player collidingPlayer = ball.collidesWithAny(player1, player2);
-			if(collidingPlayer != null)
-				ball.getVelocity().X = -ball.getVelocity().X;
-			else
-			{
-				if(ball.isAboutToEnterPlayer1Area())
-					player2.addGoal();
-				else
-					player1.addGoal();
-				if(player1.hasWon())
-				{
-					winner = player1;
-				}
-				winner = player2.hasWon() ? player2 : null;
-				ball.spawnAtCenter();
-			}
-		}
+		checkForGoalAndUpdate();
 		ball.move();
+	}
+
+	private void checkForGoalAndUpdate()
+	{
+		Optional<Player> player = checkGoal();
+		if(player.isPresent())
+		{
+			player.get().addGoal();
+			winner = checkWinner();
+			ball.spawnAtCenter();
+		}
+		else
+			ball.getVelocity().X = -ball.getVelocity().X;
+	}
+
+	public Optional<Player> checkGoal()
+	{
+		if(ball.isAboutToEnterPlayer1Area())
+			return Optional.of(player2);
+		else if(ball.isAboutToEnterPlayer2Area())
+			return Optional.of(player1);
+		return Optional.ofNullable(null);
+	}
+
+	public Player checkWinner()
+	{
+		if (player1.hasWon())
+			return player1;
+		return player2.hasWon() ? player2 : null;
 	}
 
 	public boolean hasGameEnded()

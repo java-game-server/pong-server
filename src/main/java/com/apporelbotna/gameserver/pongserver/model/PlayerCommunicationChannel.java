@@ -21,7 +21,7 @@ public class PlayerCommunicationChannel implements Runnable
 		public void notifyNewMessage(Player player, PlayerMovementMessage message)
 		{
 			setChanged();
-			notifyObservers(new PlayerMessage(player, message));
+			notifyObservers(new PlayerMovementMessageWrapper(player, message));
 		}
 	}
 

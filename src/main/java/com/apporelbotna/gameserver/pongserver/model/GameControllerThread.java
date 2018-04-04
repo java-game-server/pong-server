@@ -70,7 +70,7 @@ public class GameControllerThread implements Runnable, Observer
 		if (o.getClass().equals(PlayerCommunicationChannel.MessageReceivedEvent.class)) // On player
 																																										// intent
 		{
-			PlayerMessage playerMessage = (PlayerMessage)arg;
+			PlayerMovementMessageWrapper playerMessage = (PlayerMovementMessageWrapper)arg;
 			if (playerMessage.getMessage().equals(PlayerMovementMessage.GO_UP))
 				playerMessage.getPlayer().setGoingUp(true);
 			else if (playerMessage.getMessage().equals(PlayerMovementMessage.GO_DOWN))

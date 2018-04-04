@@ -10,12 +10,12 @@ import com.apporelbotna.gameserver.pongserver.stubs.net.PlayerMovementMessage;
  * @author Jendoliver
  *
  */
-public class PlayerMessage
+public class PlayerMovementMessageWrapper
 {
 	private Player player;
 	private PlayerMovementMessage message;
 
-	public PlayerMessage(Player player, PlayerMovementMessage message)
+	public PlayerMovementMessageWrapper(Player player, PlayerMovementMessage message)
 	{
 		this.player = player;
 		this.message = message;

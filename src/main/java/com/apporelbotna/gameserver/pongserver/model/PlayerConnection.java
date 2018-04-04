@@ -24,6 +24,11 @@ public class PlayerConnection extends SocketConnection
 		this.player = player;
 	}
 
+	public PlayerConnection(Player player, SocketConnection socketConnection) throws IOException
+	{
+		this(player, socketConnection.getSocket());
+	}
+
 	public boolean sendGameInfo(PongGame pongGame)
 	{
 		return send(new GameStatusMessage(pongGame, player));
