@@ -44,13 +44,13 @@ public class PongGameService
 //
 //		gameDAO.updateMatch(new Match(
 //			player1.getEmail(),
-//			idGame,
+//			ApplicationProperties.getGameId(),
 //			gameTime, // CAST TO FLOAT
 //			player1.getGoals()));
 //
 //		gameDAO.updateMatch(new Match(
 //				player2.getEmail(),
-//				idGame,
+//				ApplicationProperties.getGameId(),
 //				gameTime, // CAST TO FLOAT
 //				player2.getGoals()));
 //	}

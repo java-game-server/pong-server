@@ -14,6 +14,8 @@ public final class ApplicationProperties
 	private static String version;
 	private static String name;
 
+	private static int gameId;
+
 	private static String serverIp;
 	private static int serverSocketPort;
 	private static int serverMaxPlayers;
@@ -35,6 +37,8 @@ public final class ApplicationProperties
 			version = applicationProperties.getProperty("version");
 			name = applicationProperties.getProperty("name");
 
+			gameId = Integer.valueOf(applicationProperties.getProperty("game.id"));
+
 			serverIp = applicationProperties.getProperty("server.ip");
 			serverSocketPort = Integer.valueOf(applicationProperties.getProperty("server.socketport"));
 			serverMaxPlayers = Integer.valueOf(applicationProperties.getProperty("server.maxplayers"));
@@ -53,6 +57,11 @@ public final class ApplicationProperties
 	public static String getName()
 	{
 		return name;
+	}
+
+	public static int getGameId()
+	{
+		return gameId;
 	}
 
 	public static String getServerIp()
