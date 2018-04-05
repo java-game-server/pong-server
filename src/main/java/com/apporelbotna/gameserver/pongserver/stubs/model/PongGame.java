@@ -20,7 +20,7 @@ public class PongGame
 	private Ball ball;
 
 	private long beginPlayTime;
-	private long lastTick; // TODO use instead of Thread.sleep OR SEE TIMER CLASS BETTER :)
+	// private long lastTick; TODO use instead of Thread.sleep OR SEE TIMER CLASS BETTER :)
 
 	private Player winner = null;
 	private boolean terminateGame;
@@ -31,7 +31,7 @@ public class PongGame
 		this.player2 = player2;
 		ball = new Ball();
 		beginPlayTime = System.currentTimeMillis();
-		lastTick = beginPlayTime;
+		// lastTick = beginPlayTime;
 	}
 
 	public Player getPlayer1()
