@@ -6,6 +6,7 @@ import java.util.Observer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.apporelbotna.gameserver.pongserver.service.PongGameService;
 import com.apporelbotna.gameserver.pongserver.stubs.model.PongGame;
 import com.apporelbotna.gameserver.pongserver.stubs.net.PlayerMovementMessage;
 
@@ -30,7 +31,6 @@ public class GameControllerThread implements Runnable, Observer
 	private PlayerCommunicationChannel playerCommunicationChannel1;
 	private PlayerCommunicationChannel playerCommunicationChannel2;
 	private PongGame pongGame;
-	// private GameDAO gameDAO; TODO add when WS Client is finished
 
 	public GameControllerThread(PlayerConnection playerConn1, PlayerConnection playerConn2)
 	{
@@ -62,7 +62,7 @@ public class GameControllerThread implements Runnable, Observer
 				break;
 		}
 		logger.info("Winner: " + pongGame.getWinner().getName());
-		// PongGameService.getInstance().uploadMatchToDatabase(pongGame); TODO add when WSClient ready
+		PongGameService.getInstance().uploadMatchToDatabase(pongGame);
 	}
 
 	@Override

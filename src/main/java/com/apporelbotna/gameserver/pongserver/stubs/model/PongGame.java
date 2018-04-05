@@ -10,8 +10,8 @@ public class PongGame
 	private static final Logger logger = LoggerFactory.getLogger(PongGame.class);
 	private static final long MS_BETWEEN_PHYSICS_UPDATE = 3;
 
-	public static final int WINDOW_WIDTH = 800; // TODO give sensible value
-	public static final int WINDOW_HEIGHT = 600; // TODO give sensible value
+	public static final int WINDOW_WIDTH = 800;
+	public static final int WINDOW_HEIGHT = 600;
 
 	public static final int GOALS_TO_WIN = 5;
 
@@ -20,7 +20,7 @@ public class PongGame
 	private Ball ball;
 
 	private long beginPlayTime;
-	private long lastTick; // TODO use instead of Thread.sleep
+	private long lastTick; // TODO use instead of Thread.sleep OR SEE TIMER CLASS BETTER :)
 
 	private Player winner = null;
 	private boolean terminateGame;

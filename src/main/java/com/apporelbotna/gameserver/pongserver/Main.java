@@ -9,7 +9,6 @@ public class Main
 	public static void main(String[] args)
 	{
 		Matchmaker matchmaker = new MatchmakerQueue();
-		// PongGameService.create(new GameDAO()); TODO uncomment when client is ready
 
 		while(matchmaker.canAcceptPlayers())
 		{

@@ -55,10 +55,9 @@ public class MatchmakerQueue implements Matchmaker
 		try
 		{
 			playerListener = new SocketConnection(serverSocket.accept());
-			// String playerEmail = playerListener.readLine(); TODO replace
-			// String playerToken = playerListener.readLine();
-			String playerUsername = "kabronidas"; String playerToken = "11111";
-			return new PlayerConnection(new Player(playerUsername, playerToken), playerListener);
+			String playerEmail = playerListener.readLine();
+			String playerToken = playerListener.readLine();
+			return new PlayerConnection(new Player(playerEmail, playerToken), playerListener);
 		}
 		catch (IOException e)
 		{

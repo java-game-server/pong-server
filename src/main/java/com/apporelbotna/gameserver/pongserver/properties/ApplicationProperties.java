@@ -1,16 +1,9 @@
 package com.apporelbotna.gameserver.pongserver.properties;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.ResourceBundle;
 
 public final class ApplicationProperties
 {
-	private static final Logger logger = LoggerFactory.getLogger(ApplicationProperties.class);
-
 	private static String version;
 	private static String name;
 
@@ -27,26 +20,17 @@ public final class ApplicationProperties
 
 	static
 	{
-		String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-		String applicationPropertiesPath = rootPath + "com\\apporelbotna\\gameserver\\pongserver\\properties\\application.properties";
+		ResourceBundle bundle = ResourceBundle
+				.getBundle("com.apporelbotna.gameserver.pongserver.properties.application");
 
-		Properties applicationProperties = new Properties();
-		try
-		{
-			applicationProperties.load(new FileInputStream(applicationPropertiesPath));
-			version = applicationProperties.getProperty("version");
-			name = applicationProperties.getProperty("name");
+		version = bundle.getString("version");
+		name = bundle.getString("name");
 
-			gameId = Integer.valueOf(applicationProperties.getProperty("game.id"));
+		gameId = Integer.valueOf(bundle.getString("game.id"));
 
-			serverIp = applicationProperties.getProperty("server.ip");
-			serverSocketPort = Integer.valueOf(applicationProperties.getProperty("server.socketport"));
-			serverMaxPlayers = Integer.valueOf(applicationProperties.getProperty("server.maxplayers"));
-		}
-		catch (IOException e)
-		{
-			logger.error(e.getMessage());
-		}
+		serverIp = bundle.getString("server.ip");
+		serverSocketPort = Integer.valueOf(bundle.getString("server.socketport"));
+		serverMaxPlayers = Integer.valueOf(bundle.getString("server.maxplayers"));
 	}
 
 	public static String getVersion()
