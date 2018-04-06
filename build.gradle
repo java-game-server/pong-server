@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-	compileOnly 'com.github.java-game-server:ws-java-client:3.0.3'
+	compileOnly 'com.github.java-game-server:ws-java-client:3.0.4'
 	
 	// https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12
 	compileOnly group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
