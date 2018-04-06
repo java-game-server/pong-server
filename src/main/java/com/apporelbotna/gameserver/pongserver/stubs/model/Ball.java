@@ -37,13 +37,13 @@ public class Ball implements Drawable
 		this.position = new Vector2(INITIAL_X, INITIAL_Y);
 
 		// FIXME el random no se genera bien
-		int initialVelocityX = random.nextInt(2) - 1;
-		while (initialVelocityX == 0)
-			initialVelocityX = random.nextInt(2) - 1;
-		int initialVelocityY = random.nextInt(2) - 1;
-		while (initialVelocityY == 0)
-			initialVelocityY = random.nextInt(2) - 1;
-		this.velocity = new Vector2(initialVelocityX, initialVelocityY);
+//		int initialVelocityX = random.nextInt(2) - 1;
+//		while (initialVelocityX == 0)
+//			initialVelocityX = random.nextInt(2) - 1;
+//		int initialVelocityY = random.nextInt(2) - 1;
+//		while (initialVelocityY == 0)
+//			initialVelocityY = random.nextInt(2) - 1;
+		this.velocity = new Vector2(1, 1);
 	}
 
 	public Ball mirrorPositionX()

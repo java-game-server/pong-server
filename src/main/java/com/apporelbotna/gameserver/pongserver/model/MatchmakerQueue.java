@@ -8,9 +8,12 @@ import java.util.Queue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.apporelbotna.gameserver.persistencewsclient.GameDAO;
 import com.apporelbotna.gameserver.pongserver.properties.ApplicationProperties;
 import com.apporelbotna.gameserver.pongserver.stubs.model.Player;
 import com.apporelbotna.gameserver.pongserver.stubs.net.SocketConnection;
+import com.apporelbotna.gameserver.stubs.Token;
+import com.apporelbotna.gameserver.stubs.User;
 
 /**
  * This is the PongServer's main thread, which accepts connections from players and starts a new
@@ -28,6 +31,8 @@ public class MatchmakerQueue implements Matchmaker
 
 	private static ServerSocket serverSocket;
 
+	private GameDAO gameDAO;
+
 	public MatchmakerQueue()
 	{
 		try
@@ -40,6 +45,7 @@ public class MatchmakerQueue implements Matchmaker
 		}
 		playerQueue = new LinkedList<>();
 		logger.info("Server is running");
+		gameDAO = new GameDAO();
 	}
 
 	@Override
@@ -57,7 +63,9 @@ public class MatchmakerQueue implements Matchmaker
 			playerListener = new SocketConnection(serverSocket.accept());
 			String playerEmail = playerListener.readLine();
 			String playerToken = playerListener.readLine();
-			return new PlayerConnection(new Player(playerEmail, playerToken), playerListener);
+			gameDAO = new GameDAO();
+			User user = gameDAO.getUserInformation(playerEmail);
+			return new PlayerConnection(new Player(user, new Token(playerToken)), playerListener);
 		}
 		catch (IOException e)
 		{

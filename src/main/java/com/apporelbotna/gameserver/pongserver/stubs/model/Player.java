@@ -24,6 +24,11 @@ public class Player
 		this(new UserWrapper(new User(email), new Token(tokenKey)));
 	}
 
+	public Player(User user, Token token)
+	{
+		this(new UserWrapper(user, token));
+	}
+
 	public UserWrapper getUserWrapper()
 	{
 		return userWrapper;
