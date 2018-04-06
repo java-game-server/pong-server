@@ -13,7 +13,7 @@ dependencies {
 	compileOnly 'com.github.java-game-server:ws-java-client:3.0.3'
 	
 	// https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12
-	testCompile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
+	compileOnly group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:21.0'
